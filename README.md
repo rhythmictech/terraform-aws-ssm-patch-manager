@@ -25,23 +25,31 @@ A bit about this module
 | Name | Version |
 |------|---------|
 | terraform | >= 0.13.5 |
+| aws | >= 3.20 |
 
 ## Providers
 
-No provider.
+| Name | Version |
+|------|---------|
+| aws | >= 3.20 |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| name | Moniker to apply to all resources in the module | `string` | n/a | yes |
-| tags | User-Defined tags | `map(string)` | `{}` | no |
+| install\_log\_prefix | The S3 bucket subfolder to store install logs in | `string` | `"/patch_manager/install/"` | no |
+| log\_bucket | S3 bucket that logs should be sent to | `string` | `null` | no |
+| max\_install\_concurrency | The maximum number of instances to operate on at once | `number` | `2` | no |
+| max\_install\_errors | The maximum number of errors before stopping the install task scheduling | `number` | `2` | no |
+| max\_scan\_concurrency | The maximum number of instances to operate on at once | `number` | `20` | no |
+| max\_scan\_errors | The maximum number of errors before stopping the install task scheduling | `number` | `20` | no |
+| name | Name to assign to resources in this module | `string` | `"patch-manager"` | no |
+| scan\_log\_prefix | The S3 bucket subfolder to store scan logs in | `string` | `"/patch_manager/scan/"` | no |
+| tags | A map of tags to be added to associated resources | `map(string)` | <pre>{<br>  "terraform_managed": "True"<br>}</pre> | no |
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| tags\_module | Tags Module in it's entirety |
+No output.
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
