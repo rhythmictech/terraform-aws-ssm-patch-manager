@@ -102,7 +102,6 @@ resource "aws_ssm_maintenance_window_task" "scan" {
       comment              = "Runs a compliance scan"
       output_s3_bucket     = var.log_bucket
       output_s3_key_prefix = var.scan_log_prefix
-      service_role_arn     = aws_iam_role.ssm_maintenance_window.arn
       timeout_seconds      = 120
 
       parameter {
@@ -143,7 +142,6 @@ resource "aws_ssm_maintenance_window_task" "install" {
       comment              = "Installs necessary patches"
       output_s3_bucket     = var.log_bucket
       output_s3_key_prefix = var.install_log_prefix
-      service_role_arn     = aws_iam_role.ssm_maintenance_window.arn
       timeout_seconds      = 120
 
       parameter {
