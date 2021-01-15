@@ -37,6 +37,10 @@ A bit about this module
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| install\_schedule | 6-field Cron expression describing the maintenance schedule | `string` | n/a | yes |
+| scan\_schedule | 6-field Cron expression describing the maintenance schedule | `string` | n/a | yes |
+| install\_cutoff | How many hours before the end of the maintenance Window to stop scheduling new instances to install patches | `number` | `1` | no |
+| install\_duration | How long in hours for the install maintenance window | `number` | `3` | no |
 | install\_log\_prefix | The S3 bucket subfolder to store install logs in | `string` | `"/patch_manager/install/"` | no |
 | log\_bucket | S3 bucket that logs should be sent to | `string` | `null` | no |
 | max\_install\_concurrency | The maximum number of instances to operate on at once | `number` | `2` | no |
@@ -45,6 +49,8 @@ A bit about this module
 | max\_scan\_errors | The maximum number of errors before stopping the install task scheduling | `number` | `20` | no |
 | name | Name to assign to resources in this module | `string` | `"patch-manager"` | no |
 | platforms | The list of platforms you want to support | `set(string)` | <pre>[<br>  "AMAZON_LINUX_2",<br>  "AMAZON_LINUX",<br>  "CENTOS",<br>  "ORACLE_LINUX",<br>  "SUSE",<br>  "WINDOWS",<br>  "DEBIAN",<br>  "UBUNTU",<br>  "REDHAT_ENTERPRISE_LINUX",<br>  "MACOS"<br>]</pre> | no |
+| scan\_cutoff | How many hours before the end of the maintenance Window to stop scheduling new instances to scan | `number` | `1` | no |
+| scan\_duration | How long in hours for the scan maintenance window | `number` | `4` | no |
 | scan\_log\_prefix | The S3 bucket subfolder to store scan logs in | `string` | `"/patch_manager/scan/"` | no |
 | schedule\_timezone | IANA format timezone to use for Maintenance Window scheduling | `string` | `"UTC"` | no |
 | tags | A map of tags to be added to associated resources | `map(string)` | <pre>{<br>  "terraform_managed": "True"<br>}</pre> | no |

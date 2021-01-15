@@ -39,20 +39,20 @@ resource "aws_ssm_patch_group" "patchgroup" {
 
 resource "aws_ssm_maintenance_window" "scan" {
   name              = "scan-${var.name}"
-  cutoff            = 1
-  description       = "Maintenance window for applying patches"
-  duration          = 4
-  schedule          = "cron(0 06 * * ? *)"
+  cutoff            = var.scan_cutoff
+  description       = "Maintenance window for scanning for patch compliance"
+  duration          = var.scan_duration
+  schedule          = var.scan_schedule
   schedule_timezone = var.schedule_timezone
   tags              = var.tags
 }
 
 resource "aws_ssm_maintenance_window" "install" {
   name              = "install-${var.name}"
-  cutoff            = 1
+  cutoff            = var.install_cutoff
   description       = "Maintenance window for applying patches"
-  duration          = 3
-  schedule          = "cron(0 22 * * ? *)"
+  duration          = var.install_duration
+  schedule          = var.install_schedule
   schedule_timezone = var.schedule_timezone
   tags              = var.tags
 }

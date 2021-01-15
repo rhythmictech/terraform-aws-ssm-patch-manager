@@ -84,9 +84,26 @@ variable "log_bucket" {
   type        = string
 }
 
+variable "scan_cutoff" {
+  default     = 1
+  description = "How many hours before the end of the maintenance Window to stop scheduling new instances to scan"
+  type        = number
+}
+
+variable "scan_duration" {
+  default     = 4
+  description = "How long in hours for the scan maintenance window"
+  type        = number
+}
+
 variable "scan_log_prefix" {
   default     = "/patch_manager/scan/"
   description = "The S3 bucket subfolder to store scan logs in"
+  type        = string
+}
+
+variable "scan_schedule" {
+  description = "6-field Cron expression describing the maintenance schedule"
   type        = string
 }
 
@@ -101,8 +118,25 @@ variable "schedule_timezone" {
   }
 }
 
+variable "install_cutoff" {
+  default     = 1
+  description = "How many hours before the end of the maintenance Window to stop scheduling new instances to install patches"
+  type        = number
+}
+
+variable "install_duration" {
+  default     = 3
+  description = "How long in hours for the install maintenance window"
+  type        = number
+}
+
 variable "install_log_prefix" {
   default     = "/patch_manager/install/"
   description = "The S3 bucket subfolder to store install logs in"
+  type        = string
+}
+
+variable "install_schedule" {
+  description = "6-field Cron expression describing the maintenance schedule"
   type        = string
 }
