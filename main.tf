@@ -1,18 +1,3 @@
-locals {
-  platforms = {
-    amazon_linux_2 = "AMAZON_LINUX_2"
-    amazon_linux   = "AMAZON_LINUX"
-    centos         = "CENTOS"
-    oracle         = "ORACLE_LINUX"
-    suse           = "SUSE"
-    windows        = "WINDOWS"
-    debian         = "DEBIAN"
-    ubuntu         = "UBUNTU"
-    rhel           = "REDHAT_ENTERPRISE_LINUX"
-    macos          = "MACOS"
-  }
-}
-
 data "aws_iam_policy_document" "ssm_maintenance_window" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -39,17 +24,17 @@ resource "aws_iam_role_policy_attachment" "role_attach_ssm_mw" {
 }
 
 data "aws_ssm_patch_baseline" "this" {
-  for_each         = local.platforms
+  for_each         = var.platforms
   owner            = "AWS"
   name_prefix      = "AWS-"
-  operating_system = each.value
+  operating_system = each.key
   default_baseline = true
 }
 
 resource "aws_ssm_patch_group" "patchgroup" {
-  for_each    = local.platforms
+  for_each    = var.platforms
   baseline_id = data.aws_ssm_patch_baseline.this[each.key].id
-  patch_group = each.value
+  patch_group = each.key
 }
 
 resource "aws_ssm_maintenance_window" "scan" {
@@ -58,7 +43,7 @@ resource "aws_ssm_maintenance_window" "scan" {
   description       = "Maintenance window for applying patches"
   duration          = 4
   schedule          = "cron(0 06 * * ? *)"
-  schedule_timezone = "America/New_York"
+  schedule_timezone = var.schedule_timezone
   tags              = var.tags
 }
 
@@ -68,18 +53,18 @@ resource "aws_ssm_maintenance_window" "install" {
   description       = "Maintenance window for applying patches"
   duration          = 3
   schedule          = "cron(0 22 * * ? *)"
-  schedule_timezone = "America/New_York"
+  schedule_timezone = var.schedule_timezone
   tags              = var.tags
 }
 
 resource "aws_ssm_maintenance_window_target" "scan" {
-  for_each      = local.platforms
+  for_each      = var.platforms
   window_id     = aws_ssm_maintenance_window.scan.id
   resource_type = "INSTANCE"
 
   targets {
     key    = "tag:Patch Group"
-    values = [each.value]
+    values = [each.key]
   }
 }
 
@@ -113,13 +98,13 @@ resource "aws_ssm_maintenance_window_task" "scan" {
 }
 
 resource "aws_ssm_maintenance_window_target" "install" {
-  for_each      = local.platforms
+  for_each      = var.platforms
   window_id     = aws_ssm_maintenance_window.install.id
   resource_type = "INSTANCE"
 
   targets {
     key    = "tag:Patch Group"
-    values = [each.value]
+    values = [each.key]
   }
 }
 

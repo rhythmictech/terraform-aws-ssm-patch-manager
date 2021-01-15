@@ -44,7 +44,9 @@ A bit about this module
 | max\_scan\_concurrency | The maximum number of instances to operate on at once | `number` | `20` | no |
 | max\_scan\_errors | The maximum number of errors before stopping the install task scheduling | `number` | `20` | no |
 | name | Name to assign to resources in this module | `string` | `"patch-manager"` | no |
+| platforms | The list of platforms you want to support | `set(string)` | <pre>[<br>  "AMAZON_LINUX_2",<br>  "AMAZON_LINUX",<br>  "CENTOS",<br>  "ORACLE_LINUX",<br>  "SUSE",<br>  "WINDOWS",<br>  "DEBIAN",<br>  "UBUNTU",<br>  "REDHAT_ENTERPRISE_LINUX",<br>  "MACOS"<br>]</pre> | no |
 | scan\_log\_prefix | The S3 bucket subfolder to store scan logs in | `string` | `"/patch_manager/scan/"` | no |
+| schedule\_timezone | IANA format timezone to use for Maintenance Window scheduling | `string` | `"UTC"` | no |
 | tags | A map of tags to be added to associated resources | `map(string)` | <pre>{<br>  "terraform_managed": "True"<br>}</pre> | no |
 
 ## Outputs

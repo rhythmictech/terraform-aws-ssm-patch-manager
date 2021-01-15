@@ -1,12 +1,13 @@
 variable "name" {
-  type        = string
-  description = "Name to assign to resources in this module"
   default     = "patch-manager"
+  description = "Name to assign to resources in this module"
+  type        = string
 }
 
 variable "tags" {
-  type        = map(string)
   description = "A map of tags to be added to associated resources"
+  type        = map(string)
+
   default = {
     terraform_managed = "True"
   }
@@ -36,6 +37,47 @@ variable "max_install_errors" {
   type        = number
 }
 
+variable "platforms" {
+  description = "The list of platforms you want to support"
+  type        = set(string)
+
+  default = [
+    "AMAZON_LINUX_2",
+    "AMAZON_LINUX",
+    "CENTOS",
+    "ORACLE_LINUX",
+    "SUSE",
+    "WINDOWS",
+    "DEBIAN",
+    "UBUNTU",
+    "REDHAT_ENTERPRISE_LINUX",
+    "MACOS"
+  ]
+
+  # Make sure that only supported platforms are passed in
+  validation {
+    error_message = "Please check that you are specifying only supported platforms."
+
+    condition = (
+      var.platforms == setintersection(
+        var.platforms,
+        [
+          "AMAZON_LINUX_2",
+          "AMAZON_LINUX",
+          "CENTOS",
+          "ORACLE_LINUX",
+          "SUSE",
+          "WINDOWS",
+          "DEBIAN",
+          "UBUNTU",
+          "REDHAT_ENTERPRISE_LINUX",
+          "MACOS"
+        ]
+      )
+    )
+  }
+}
+
 variable "log_bucket" {
   default     = null
   description = "S3 bucket that logs should be sent to"
@@ -43,13 +85,24 @@ variable "log_bucket" {
 }
 
 variable "scan_log_prefix" {
-  type        = string
-  description = "The S3 bucket subfolder to store scan logs in"
   default     = "/patch_manager/scan/"
+  description = "The S3 bucket subfolder to store scan logs in"
+  type        = string
+}
+
+variable "schedule_timezone" {
+  type        = string
+  description = "IANA format timezone to use for Maintenance Window scheduling"
+  default     = "UTC"
+
+  validation {
+    condition     = fileexists("/usr/share/zoneinfo.default/${var.schedule_timezone}") || fileexists("/usr/share/zoneinfo/${var.schedule_timezone}")
+    error_message = "Time zone invalid or validation failed."
+  }
 }
 
 variable "install_log_prefix" {
-  type        = string
-  description = "The S3 bucket subfolder to store install logs in"
   default     = "/patch_manager/install/"
+  description = "The S3 bucket subfolder to store install logs in"
+  type        = string
 }
