@@ -21,3 +21,4 @@ jobs:
           reporter: github-check
           filter_mode: nofilter
           level: error
+          ignore: cancelled # Ignoring because Misspell is too strict on this.
