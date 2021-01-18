@@ -189,6 +189,59 @@ variable "install_log_prefix" {
   type        = string
 }
 
+variable "install_notification_configs" {
+  default     = []
+  description = "A set of objects containing `notification_config`s [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_maintenance_window_task#notification_config)"
+
+  type = set(object({
+    notification_arn    = string
+    notification_events = string
+    notification_type   = string
+  }))
+
+  validation {
+    error_message = "Invalid value for `notification_events`."
+
+    condition = (
+      setunion(
+        [
+          for config in var.install_notification_configs : config.notification_events
+        ]
+        ) == setintersection(
+        [
+          "All",
+          "InProgress",
+          "Success",
+          "TimedOut",
+          "Cancelled",
+          "Failed"
+        ],
+        setunion(
+          [
+            for config in var.install_notification_configs : config.notification_events
+          ]
+        )
+      )
+    )
+  }
+
+  validation {
+    error_message = "Invalid `notification_type`."
+
+    condition = (
+      toset(
+        [for config in var.install_notification_configs : config.notification_type]
+        ) == setintersection(
+        [for config in var.install_notification_configs : config.notification_type],
+        [
+          "Command",
+          "Invocation"
+        ]
+      )
+    )
+  }
+}
+
 variable "install_schedule" {
   description = "6-field Cron expression describing the maintenance schedule"
   type        = string

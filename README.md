@@ -42,6 +42,7 @@ A bit about this module
 | install\_cutoff | How many hours before the end of the maintenance Window to stop scheduling new instances to install patches | `number` | `1` | no |
 | install\_duration | How long in hours for the install maintenance window | `number` | `3` | no |
 | install\_log\_prefix | The S3 bucket subfolder to store install logs in | `string` | `"/patch_manager/install/"` | no |
+| install\_notification\_configs | A set of objects containing `notification_config`s [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_maintenance_window_task#notification_config) | <pre>set(object({<br>    notification_arn    = string<br>    notification_events = string<br>    notification_type   = string<br>  }))</pre> | `[]` | no |
 | log\_bucket | S3 bucket that logs should be sent to | `string` | `null` | no |
 | max\_install\_concurrency | The maximum number of instances to operate on at once | `number` | `2` | no |
 | max\_install\_errors | The maximum number of errors before stopping the install task scheduling | `number` | `2` | no |
