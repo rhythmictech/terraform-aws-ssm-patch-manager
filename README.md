@@ -52,6 +52,7 @@ A bit about this module
 | scan\_cutoff | How many hours before the end of the maintenance Window to stop scheduling new instances to scan | `number` | `1` | no |
 | scan\_duration | How long in hours for the scan maintenance window | `number` | `4` | no |
 | scan\_log\_prefix | The S3 bucket subfolder to store scan logs in | `string` | `"/patch_manager/scan/"` | no |
+| scan\_notification\_configs | A set of objects containing `notification_config`s [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_maintenance_window_task#notification_config) | <pre>set(object({<br>    notification_arn    = string<br>    notification_events = string<br>    notification_type   = string<br>  }))</pre> | `[]` | no |
 | schedule\_timezone | IANA format timezone to use for Maintenance Window scheduling | `string` | `"UTC"` | no |
 | tags | A map of tags to be added to associated resources | `map(string)` | <pre>{<br>  "terraform_managed": "True"<br>}</pre> | no |
 

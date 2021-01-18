@@ -93,6 +93,16 @@ resource "aws_ssm_maintenance_window_task" "scan" {
         name   = "Operation"
         values = ["Scan"]
       }
+
+      dynamic "notification_config" {
+        for_each = var.scan_notification_configs
+
+        content {
+          notification_arn    = notification_config.value.notification_arn
+          notification_events = notification_config.value.notification_events
+          notification_type   = notification_config.value.notification_type
+        }
+      }
     }
   }
 }
