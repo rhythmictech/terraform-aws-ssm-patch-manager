@@ -59,7 +59,7 @@ variable "platforms" {
     error_message = "Please check that you are specifying only supported platforms."
 
     condition = (
-      var.platforms == setintersection(
+      toset(var.platforms) == setintersection(
         var.platforms,
         [
           "AMAZON_LINUX_2",
@@ -116,11 +116,12 @@ variable "scan_notification_configs" {
     error_message = "Invalid value for `notification_events`."
 
     condition = (
-      setunion(
+      length(var.scan_notification_configs) == 0 ||
+      toset(flatten(
         [
           for config in var.scan_notification_configs : config.notification_events
         ]
-        ) == setintersection(
+        )) == setintersection(
         [
           "All",
           "InProgress",
@@ -129,11 +130,11 @@ variable "scan_notification_configs" {
           "Cancelled",
           "Failed"
         ],
-        setunion(
+        toset(flatten(
           [
             for config in var.scan_notification_configs : config.notification_events
           ]
-        )
+        ))
       )
     )
   }
@@ -142,6 +143,7 @@ variable "scan_notification_configs" {
     error_message = "Invalid `notification_type`."
 
     condition = (
+      length(var.scan_notification_configs) == 0 ||
       toset(
         [for config in var.scan_notification_configs : config.notification_type]
         ) == setintersection(
@@ -156,7 +158,7 @@ variable "scan_notification_configs" {
 }
 
 variable "scan_schedule" {
-  description = "6-field Cron expression describing the maintenance schedule"
+  description = "6-field Cron expression describing the scan maintenance schedule"
   type        = string
 }
 
@@ -203,11 +205,12 @@ variable "install_notification_configs" {
     error_message = "Invalid value for `notification_events`."
 
     condition = (
-      setunion(
+      length(var.install_notification_configs) == 0 ||
+      toset(flatten(
         [
           for config in var.install_notification_configs : config.notification_events
         ]
-        ) == setintersection(
+        )) == setintersection(
         [
           "All",
           "InProgress",
@@ -216,11 +219,11 @@ variable "install_notification_configs" {
           "Cancelled",
           "Failed"
         ],
-        setunion(
+        toset(flatten(
           [
             for config in var.install_notification_configs : config.notification_events
           ]
-        )
+        ))
       )
     )
   }
@@ -229,6 +232,7 @@ variable "install_notification_configs" {
     error_message = "Invalid `notification_type`."
 
     condition = (
+      length(var.install_notification_configs) == 0 ||
       toset(
         [for config in var.install_notification_configs : config.notification_type]
         ) == setintersection(
@@ -243,6 +247,6 @@ variable "install_notification_configs" {
 }
 
 variable "install_schedule" {
-  description = "6-field Cron expression describing the maintenance schedule"
+  description = "6-field Cron expression describing the install maintenance schedule"
   type        = string
 }

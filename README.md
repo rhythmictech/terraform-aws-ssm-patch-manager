@@ -37,8 +37,8 @@ A bit about this module
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| install\_schedule | 6-field Cron expression describing the maintenance schedule | `string` | n/a | yes |
-| scan\_schedule | 6-field Cron expression describing the maintenance schedule | `string` | n/a | yes |
+| install\_schedule | 6-field Cron expression describing the install maintenance schedule | `string` | n/a | yes |
+| scan\_schedule | 6-field Cron expression describing the scan maintenance schedule | `string` | n/a | yes |
 | install\_cutoff | How many hours before the end of the maintenance Window to stop scheduling new instances to install patches | `number` | `1` | no |
 | install\_duration | How long in hours for the install maintenance window | `number` | `3` | no |
 | install\_log\_prefix | The S3 bucket subfolder to store install logs in | `string` | `"/patch_manager/install/"` | no |
