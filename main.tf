@@ -1,28 +1,3 @@
-data "aws_iam_policy_document" "ssm_maintenance_window" {
-  statement {
-    actions = ["sts:AssumeRole"]
-    principals {
-      type = "Service"
-      identifiers = [
-        "ec2.amazonaws.com",
-        "ssm.amazonaws.com"
-      ]
-    }
-  }
-}
-
-resource "aws_iam_role" "ssm_maintenance_window" {
-  name_prefix        = var.name
-  assume_role_policy = data.aws_iam_policy_document.ssm_maintenance_window.json
-  path               = "/system/"
-  tags               = var.tags
-}
-
-resource "aws_iam_role_policy_attachment" "role_attach_ssm_mw" {
-  role       = aws_iam_role.ssm_maintenance_window.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonSSMMaintenanceWindowRole"
-}
-
 data "aws_ssm_patch_baseline" "this" {
   for_each         = var.platforms
   owner            = "AWS"
@@ -69,13 +44,12 @@ resource "aws_ssm_maintenance_window_target" "scan" {
 }
 
 resource "aws_ssm_maintenance_window_task" "scan" {
-  window_id        = aws_ssm_maintenance_window.scan.id
-  task_type        = "RUN_COMMAND"
-  task_arn         = "AWS-RunPatchBaseline"
-  priority         = 1
-  service_role_arn = aws_iam_role.ssm_maintenance_window.arn
-  max_concurrency  = var.max_scan_concurrency
-  max_errors       = var.max_scan_errors
+  window_id       = aws_ssm_maintenance_window.scan.id
+  task_type       = "RUN_COMMAND"
+  task_arn        = "AWS-RunPatchBaseline"
+  priority        = 1
+  max_concurrency = var.max_scan_concurrency
+  max_errors      = var.max_scan_errors
 
   targets {
     key    = "WindowTargetIds"
@@ -119,13 +93,12 @@ resource "aws_ssm_maintenance_window_target" "install" {
 }
 
 resource "aws_ssm_maintenance_window_task" "install" {
-  window_id        = aws_ssm_maintenance_window.scan.id
-  task_type        = "RUN_COMMAND"
-  task_arn         = "AWS-RunPatchBaseline"
-  priority         = 1
-  service_role_arn = aws_iam_role.ssm_maintenance_window.arn
-  max_concurrency  = var.max_install_concurrency
-  max_errors       = var.max_install_errors
+  window_id       = aws_ssm_maintenance_window.scan.id
+  task_type       = "RUN_COMMAND"
+  task_arn        = "AWS-RunPatchBaseline"
+  priority        = 1
+  max_concurrency = var.max_install_concurrency
+  max_errors      = var.max_install_errors
 
   targets {
     key    = "WindowTargetIds"
