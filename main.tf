@@ -44,12 +44,12 @@ resource "aws_ssm_maintenance_window_target" "scan" {
 }
 
 resource "aws_ssm_maintenance_window_task" "scan" {
-  window_id       = aws_ssm_maintenance_window.scan.id
-  task_type       = "RUN_COMMAND"
-  task_arn        = "AWS-RunPatchBaseline"
-  priority        = 1
   max_concurrency = var.max_scan_concurrency
   max_errors      = var.max_scan_errors
+  priority        = 1
+  task_type       = "RUN_COMMAND"
+  task_arn        = "AWS-RunPatchBaseline"
+  window_id       = aws_ssm_maintenance_window.scan.id
 
   targets {
     key    = "WindowTargetIds"
@@ -93,12 +93,12 @@ resource "aws_ssm_maintenance_window_target" "install" {
 }
 
 resource "aws_ssm_maintenance_window_task" "install" {
-  window_id       = aws_ssm_maintenance_window.scan.id
-  task_type       = "RUN_COMMAND"
-  task_arn        = "AWS-RunPatchBaseline"
-  priority        = 1
   max_concurrency = var.max_install_concurrency
   max_errors      = var.max_install_errors
+  priority        = 1
+  task_type       = "RUN_COMMAND"
+  task_arn        = "AWS-RunPatchBaseline"
+  window_id       = aws_ssm_maintenance_window.scan.id
 
   targets {
     key    = "WindowTargetIds"
