@@ -44,13 +44,13 @@ Patches will only be applied to instances tagged with `TAG_GROUP : $PLATFORM` wh
 | Name | Version |
 |------|---------|
 | terraform | >= 0.13.5 |
-| aws | >= 3.20 |
+| aws | >= 3.28 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 3.20 |
+| aws | >= 3.28 |
 
 ## Inputs
 
