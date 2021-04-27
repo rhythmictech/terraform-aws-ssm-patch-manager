@@ -108,7 +108,7 @@ variable "scan_notification_configs" {
 
   type = set(object({
     notification_arn    = string
-    notification_events = string
+    notification_events = list(string)
     notification_type   = string
   }))
 
