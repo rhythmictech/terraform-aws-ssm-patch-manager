@@ -212,7 +212,6 @@ variable "install_notification_configs" {
     notification_arn      = string
     notification_events   = list(string)
     notification_type     = string
-    notification_role_arn = string
   }))
 
   validation {
