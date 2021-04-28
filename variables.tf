@@ -102,15 +102,20 @@ variable "scan_log_prefix" {
   type        = string
 }
 
+variable "scan_notification_role_arn" {
+  description = "The role arn to use for notifications"
+  type        = string
+  default     = null
+}
+
 variable "scan_notification_configs" {
   default     = []
   description = "A set of objects containing `notification_config`s [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_maintenance_window_task#notification_config)"
 
   type = set(object({
-    notification_arn      = string
-    notification_events   = list(string)
-    notification_type     = string
-    notification_role_arn = string
+    notification_arn    = string
+    notification_events = list(string)
+    notification_type   = string
   }))
 
   validation {
@@ -191,6 +196,13 @@ variable "install_log_prefix" {
   description = "The S3 bucket subfolder to store install logs in"
   type        = string
 }
+
+variable "install_notification_role_arn" {
+  description = "The role arn to use for notifications"
+  type        = string
+  default     = null
+}
+
 
 variable "install_notification_configs" {
   default     = []
