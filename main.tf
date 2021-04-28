@@ -59,6 +59,7 @@ resource "aws_ssm_maintenance_window_task" "scan" {
   task_invocation_parameters {
     run_command_parameters {
       comment              = "Runs a compliance scan"
+      service_role_arn     = var.scan_notification_role_arn
       output_s3_bucket     = var.log_bucket
       output_s3_key_prefix = var.scan_log_prefix
       timeout_seconds      = 120
@@ -108,6 +109,7 @@ resource "aws_ssm_maintenance_window_task" "install" {
   task_invocation_parameters {
     run_command_parameters {
       comment              = "Installs necessary patches"
+      service_role_arn     = var.install_notification_role_arn
       output_s3_bucket     = var.log_bucket
       output_s3_key_prefix = var.install_log_prefix
       timeout_seconds      = 120
