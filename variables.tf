@@ -209,9 +209,9 @@ variable "install_notification_configs" {
   description = "A set of objects containing `notification_config`s [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_maintenance_window_task#notification_config)"
 
   type = set(object({
-    notification_arn      = string
-    notification_events   = list(string)
-    notification_type     = string
+    notification_arn    = string
+    notification_events = list(string)
+    notification_type   = string
   }))
 
   validation {
