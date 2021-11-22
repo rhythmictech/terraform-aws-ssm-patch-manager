@@ -99,7 +99,7 @@ resource "aws_ssm_maintenance_window_task" "install" {
   priority        = 1
   task_type       = "RUN_COMMAND"
   task_arn        = "AWS-RunPatchBaseline"
-  window_id       = aws_ssm_maintenance_window.scan.id
+  window_id       = aws_ssm_maintenance_window.install.id
 
   targets {
     key    = "WindowTargetIds"
