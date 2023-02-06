@@ -163,6 +163,16 @@ variable "scan_notification_configs" {
   }
 }
 
+variable "scan_cloudwatch_configs" {
+  default     = []
+  description = "A set of objects containing `cloudwatch_config`s [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_maintenance_window_task#cloudwatch_config)"
+
+  type = set(object({
+    cloudwatch_log_group_name = string
+    cloudwatch_output_enabled = bool
+  }))
+}
+
 variable "scan_schedule" {
   description = "6-field Cron expression describing the scan maintenance schedule"
   type        = string
@@ -209,9 +219,9 @@ variable "install_notification_configs" {
   description = "A set of objects containing `notification_config`s [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_maintenance_window_task#notification_config)"
 
   type = set(object({
-    notification_arn      = string
-    notification_events   = list(string)
-    notification_type     = string
+    notification_arn    = string
+    notification_events = list(string)
+    notification_type   = string
   }))
 
   validation {
@@ -259,7 +269,23 @@ variable "install_notification_configs" {
   }
 }
 
+variable "install_cloudwatch_configs" {
+  default     = []
+  description = "A set of objects containing `cloudwatch_config`s [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_maintenance_window_task#cloudwatch_config)"
+
+  type = set(object({
+    cloudwatch_log_group_name = string
+    cloudwatch_output_enabled = bool
+  }))
+}
+
 variable "install_schedule" {
   description = "6-field Cron expression describing the install maintenance schedule"
   type        = string
+}
+
+variable "service_role_arn" {
+  description = "The role that should be assumed when executing the task"
+  type        = string
+  default     = null
 }
