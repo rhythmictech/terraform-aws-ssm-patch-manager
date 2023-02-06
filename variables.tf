@@ -176,6 +176,7 @@ variable "scan_cloudwatch_configs" {
 variable "scan_schedule" {
   description = "6-field Cron expression describing the scan maintenance schedule"
   type        = string
+  default     = "cron(35 14 * * ? *)"
 }
 
 variable "schedule_timezone" {
@@ -282,4 +283,11 @@ variable "install_cloudwatch_configs" {
 variable "install_schedule" {
   description = "6-field Cron expression describing the install maintenance schedule"
   type        = string
+  default     = "cron(35 14 * * ? *)"
+}
+
+variable "service_role_arn" {
+  description = "The role that should be assumed when executing the task"
+  type        = string
+  default     = null
 }
