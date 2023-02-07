@@ -58,6 +58,7 @@ Patches will only be applied to instances tagged with `TAG_GROUP : $PLATFORM` wh
 |------|-------------|------|---------|:--------:|
 | install\_schedule | 6-field Cron expression describing the install maintenance schedule | `string` | n/a | yes |
 | scan\_schedule | 6-field Cron expression describing the scan maintenance schedule | `string` | n/a | yes |
+| input\_install\_cloudwatch\_configs (#input\_install\_cloudwatch\_configs) | A set of objects containing `cloudwatch_config`s [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_maintenance_window_task#cloudwatch_config) | <pre>set(object({<br>    cloudwatch_log_group_name = string<br>    cloudwatch_output_enabled = bool<br>  }))</pre> | `[]` | no |
 | install\_cutoff | How many hours before the end of the maintenance Window to stop scheduling new instances to install patches | `number` | `1` | no |
 | install\_duration | How long in hours for the install maintenance window | `number` | `3` | no |
 | install\_log\_prefix | The S3 bucket subfolder to store install logs in | `string` | `"/patch_manager/install/"` | no |
@@ -69,11 +70,13 @@ Patches will only be applied to instances tagged with `TAG_GROUP : $PLATFORM` wh
 | max\_scan\_errors | The maximum number of errors before stopping the install task scheduling | `number` | `20` | no |
 | name | Name to assign to resources in this module | `string` | `"patch-manager"` | no |
 | platforms | The list of platforms you want to support | `set(string)` | <pre>[<br>  "AMAZON_LINUX_2",<br>  "AMAZON_LINUX",<br>  "CENTOS",<br>  "ORACLE_LINUX",<br>  "SUSE",<br>  "WINDOWS",<br>  "DEBIAN",<br>  "UBUNTU",<br>  "REDHAT_ENTERPRISE_LINUX",<br>  "MACOS"<br>]</pre> | no |
+| input\_scan\_cloudwatch\_configs (#input\_install\_cloudwatch\_configs) | A set of objects containing `cloudwatch_config`s [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_maintenance_window_task#cloudwatch_config) | <pre>set(object({<br>    cloudwatch_log_group_name = string<br>    cloudwatch_output_enabled = bool<br>  }))</pre> | `[]` | no |
 | scan\_cutoff | How many hours before the end of the maintenance Window to stop scheduling new instances to scan | `number` | `1` | no |
 | scan\_duration | How long in hours for the scan maintenance window | `number` | `4` | no |
 | scan\_log\_prefix | The S3 bucket subfolder to store scan logs in | `string` | `"/patch_manager/scan/"` | no |
 | scan\_notification\_configs | A set of objects containing `notification_config`s [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_maintenance_window_task#notification_config) | <pre>set(object({<br>    notification_arn    = string<br>    notification_events = string<br>    notification_type   = string<br>  }))</pre> | `[]` | no |
 | schedule\_timezone | IANA format timezone to use for Maintenance Window scheduling | `string` | `"UTC"` | no |
+| input\_service\_role\_arn | The role that should be assumed when executing the task | `string` | `null` | no |
 | tags | A map of tags to be added to associated resources | `map(string)` | <pre>{<br>  "terraform_managed": "True"<br>}</pre> | no |
 
 ## Outputs
