@@ -184,7 +184,7 @@ variable "schedule_timezone" {
   default     = "UTC"
 
   validation {
-    condition     = fileexists("/usr/share/zoneinfo.default/${var.schedule_timezone}") || fileexists("/usr/share/zoneinfo/${var.schedule_timezone}") || "${var.schedule_timezone}" == "UTC"
+    condition     = fileexists("/usr/share/zoneinfo.default/${var.schedule_timezone}") || fileexists("/usr/share/zoneinfo/${var.schedule_timezone}") || var.schedule_timezone == "UTC"
     error_message = "Time zone invalid or validation failed."
   }
 }
