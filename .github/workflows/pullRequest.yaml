@@ -68,6 +68,7 @@ jobs:
           reporter: github-pr-check
           filter_mode: added
           level: error
+          ignore: Cancelled
   yamllint:
     runs-on: ubuntu-latest
     steps:
