@@ -282,10 +282,24 @@ variable "install_cloudwatch_configs" {
 variable "install_schedule" {
   description = "6-field Cron expression describing the install maintenance schedule"
   type        = string
+  default     = null
 }
 
 variable "service_role_arn" {
   description = "The role that should be assumed when executing the task"
   type        = string
   default     = null
+}
+
+variable "patch_operation" {
+  description = "Specify if the patch manager should scan only or if it should scan and install (SCAN/SCAN_INSTALL)"
+  type        = string
+
+  default = "SCAN_INSTALL"
+
+  validation {
+    error_message = "Error: Please provide the patch operation that you want (SCAN/SCAN_INSTALL)"
+
+    condition = contains(["SCAN", "SCAN_INSTALL"], var.patch_operation)
+  }
 }
