@@ -43,8 +43,8 @@ Patches will only be applied to instances tagged with `TAG_GROUP : $PLATFORM` wh
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.5 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.28 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.1 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.17.0 |
 
 ## Providers
 
