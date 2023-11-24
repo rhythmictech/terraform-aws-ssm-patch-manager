@@ -38,7 +38,7 @@ Patches will only be applied to instances tagged with `TAG_GROUP : $PLATFORM` wh
 - REDHAT_ENTERPRISE_LINUX
 - MACOS
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -76,6 +76,7 @@ No modules.
 | <a name="input_install_cloudwatch_configs"></a> [install\_cloudwatch\_configs](#input\_install\_cloudwatch\_configs) | A set of objects containing `cloudwatch_config`s [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_maintenance_window_task#cloudwatch_config) | <pre>set(object({<br>    cloudwatch_log_group_name = string<br>    cloudwatch_output_enabled = bool<br>  }))</pre> | `[]` | no |
 | <a name="input_install_cutoff"></a> [install\_cutoff](#input\_install\_cutoff) | How many hours before the end of the maintenance Window to stop scheduling new instances to install patches | `number` | `1` | no |
 | <a name="input_install_duration"></a> [install\_duration](#input\_install\_duration) | How long in hours for the install maintenance window | `number` | `3` | no |
+| <a name="input_install_enabled"></a> [install\_enabled](#input\_install\_enabled) | Enable Install. Default -> True | `bool` | `true` | no |
 | <a name="input_install_log_prefix"></a> [install\_log\_prefix](#input\_install\_log\_prefix) | The S3 bucket subfolder to store install logs in | `string` | `"/patch_manager/install/"` | no |
 | <a name="input_install_notification_configs"></a> [install\_notification\_configs](#input\_install\_notification\_configs) | A set of objects containing `notification_config`s [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_maintenance_window_task#notification_config) | <pre>set(object({<br>    notification_arn    = string<br>    notification_events = list(string)<br>    notification_type   = string<br>  }))</pre> | `[]` | no |
 | <a name="input_install_notification_role_arn"></a> [install\_notification\_role\_arn](#input\_install\_notification\_role\_arn) | The role arn to use for notifications | `string` | `null` | no |
@@ -90,6 +91,7 @@ No modules.
 | <a name="input_scan_cloudwatch_configs"></a> [scan\_cloudwatch\_configs](#input\_scan\_cloudwatch\_configs) | A set of objects containing `cloudwatch_config`s [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_maintenance_window_task#cloudwatch_config) | <pre>set(object({<br>    cloudwatch_log_group_name = string<br>    cloudwatch_output_enabled = bool<br>  }))</pre> | `[]` | no |
 | <a name="input_scan_cutoff"></a> [scan\_cutoff](#input\_scan\_cutoff) | How many hours before the end of the maintenance Window to stop scheduling new instances to scan | `number` | `1` | no |
 | <a name="input_scan_duration"></a> [scan\_duration](#input\_scan\_duration) | How long in hours for the scan maintenance window | `number` | `4` | no |
+| <a name="input_scan_enabled"></a> [scan\_enabled](#input\_scan\_enabled) | Enable Scan. Default -> True | `bool` | `true` | no |
 | <a name="input_scan_log_prefix"></a> [scan\_log\_prefix](#input\_scan\_log\_prefix) | The S3 bucket subfolder to store scan logs in | `string` | `"/patch_manager/scan/"` | no |
 | <a name="input_scan_notification_configs"></a> [scan\_notification\_configs](#input\_scan\_notification\_configs) | A set of objects containing `notification_config`s [docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_maintenance_window_task#notification_config) | <pre>set(object({<br>    notification_arn    = string<br>    notification_events = list(string)<br>    notification_type   = string<br>  }))</pre> | `[]` | no |
 | <a name="input_scan_notification_role_arn"></a> [scan\_notification\_role\_arn](#input\_scan\_notification\_role\_arn) | The role arn to use for notifications | `string` | `null` | no |
@@ -101,7 +103,7 @@ No modules.
 ## Outputs
 
 No outputs.
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->
 
 ## Getting Started
 This workflow has a few prerequisites which are installed through the `./bin/install-x.sh` scripts and are linked below. The install script will also work on your local machine. 
