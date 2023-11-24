@@ -90,6 +90,18 @@ variable "scan_cutoff" {
   type        = number
 }
 
+variable "scan_enabled" {
+  default     = true
+  description = "Enable Scan. Default -> True"
+  type        = bool
+}
+
+variable "install_enabled" {
+  default     = true
+  description = "Enable Install. Default -> True"
+  type        = bool
+}
+
 variable "scan_duration" {
   default     = 4
   description = "How long in hours for the scan maintenance window"
